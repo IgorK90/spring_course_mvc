@@ -1,7 +1,10 @@
 package com.zaurtregulov.spring.mvc;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MyController {
@@ -16,9 +19,23 @@ public class MyController {
         return "ask-emp-details-view";
     }
 
+//    @RequestMapping("/showDetails")
+//    public String showDetails()
+//    {
+//        return "show-emp-details-view";
+//    }
+
+
     @RequestMapping("/showDetails")
-    public String showDetails()
+    public String showDetails(HttpServletRequest request, Model model)
     {
+        String empName = request.getParameter("employeeName"); //employeeName берется из ссылки генерируемой в ask-emp-details-view
+        empName = "Mr. "+empName;
+        model.addAttribute("nameAttribute", empName);
+
+        model.addAttribute("description", " - udemy instructor");
+
+
         return "show-emp-details-view";
     }
 }
