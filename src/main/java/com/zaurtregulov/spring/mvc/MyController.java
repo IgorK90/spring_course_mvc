@@ -2,12 +2,14 @@ package com.zaurtregulov.spring.mvc;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/employee")
@@ -56,17 +58,23 @@ public class MyController {
 //
 //    return "show-emp-details-view";
 //}
-public String showDetails(@ModelAttribute("employee") Employee emp)
+public String showDetails(@Valid @ModelAttribute("employee") Employee emp, BindingResult bindingResult)
 {
-    String name= emp.getName();
-    emp.setName("Mr. "+name);
-
-    String surname = emp.getSurname();
-    emp.setSurname(surname+ " !");
-
-    int salary = emp.getSalary();
-    emp.setSalary(salary*10);
-    return "show-emp-details-view";
+//    String name= emp.getName();
+//    emp.setName("Mr. "+name);
+//
+//    String surname = emp.getSurname();
+//    emp.setSurname(surname+ " !");
+//
+//    int salary = emp.getSalary();
+//    emp.setSalary(salary*10);
+    System.out.println("surname length = " + emp.getSurname().length());
+    if (bindingResult.hasErrors()) {
+        return "ask-emp-details-view";
+    }
+    else {
+        return "show-emp-details-view";
+    }
 }
 }
 
